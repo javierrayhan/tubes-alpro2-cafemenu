@@ -9,7 +9,7 @@ type menu struct {
 	kategori     string
 	harga        int
 	komposisi    string
-	ketersediaan bool //true = sedia,  false = tidak tersedia
+	ketersediaan bool
 }
 
 type arrMenu [NMAX]menu
@@ -45,9 +45,5 @@ func tambahData(m *arrMenu, n *int, add int) {
 
 func main() {
 	var n int
-	var menuData arrMenu
-
 	fmt.Scan(&n)
-
-	fmt.Println(menuData)
 }

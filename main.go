@@ -98,8 +98,23 @@ func lihatData(m *arrMenu, a *int) {
 	return
 }
 
-func ubahData() {
-
+func ubahData(m *arrMenu, a *int) {
+	var i, edit, x int
+	fmt.Print("Masukkan ID menu: ")
+	fmt.Scan(&edit)
+	x = 0
+	for i = 0; i < *a; i++ {
+		if m[i].id == edit {
+			fmt.Scan(&m[i].id, &m[*a].nama, &m[*a].kategori, &m[*a].harga, &m[*a].komposisi, &m[*a].ketersediaan)
+			x++
+			break
+		}
+	}
+	if x > 0 {
+		fmt.Println("Data Berhasil Diedit")
+	} else {
+		fmt.Println("ID tidak ditemukan")
+	}
 }
 
 func hapusData() {
@@ -122,7 +137,7 @@ func adminMode(menu *arrMenu, a *int) {
 		if mode == 1 {
 			tambahData(menu, a)
 		} else if mode == 2 {
-
+			ubahData(menu, a)
 		} else if mode == 3 {
 
 		} else if mode == 4 {

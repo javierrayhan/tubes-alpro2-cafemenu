@@ -240,7 +240,7 @@ func lihatDataByCategory(m *arrMenu, a *int) {
 	var i int
 	var category string
 
-	fmt.Println("Masukkan Kategori (makanan/minumanC/minumanNC)")
+	fmt.Println("Masukkan Kategori (food/coffee/noncoffee)")
 	fmt.Scan(&category)
 	fmt.Println("")
 	fmt.Println("Menu Kategori ", category)
@@ -342,7 +342,7 @@ func StatistikCafe(m *arrMenu, a *int) {
 			fmt.Printf("Jumlah Rata Rata Harga Semua Menu: %.2f\n", rataAllMenu/float64(allCategory))
 			return
 		} else if mode == 2 {
-			fmt.Println("Masukkan Kategori (makanan/minumanC/minumanNC)")
+			fmt.Println("Masukkan Kategori (food/coffee/noncoffee)")
 			fmt.Scan(&category)
 			fmt.Println("")
 

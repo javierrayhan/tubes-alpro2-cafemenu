@@ -160,6 +160,7 @@ func tambahData(m *arrMenu, a *int) {
 	}
 
 	m[*a].id = input
+	
 	fmt.Println("<NamaMenu> <Kategori> <Harga> <Komposisi> <Ketersediaan(true/false)>")
 	fmt.Scan(
 		&nama,
@@ -167,6 +168,7 @@ func tambahData(m *arrMenu, a *int) {
 		&harga,
 		&komposisi,
 		&ketersediaan)
+
 	m[*a].nama = nama
 	m[*a].kategori = kategori
 	m[*a].harga = harga
@@ -242,6 +244,7 @@ func lihatDataByCategory(m *arrMenu, a *int) {
 	fmt.Scan(&category)
 	fmt.Println("")
 	fmt.Println("Menu Kategori ", category)
+
 	for i = 0; i < *a; i++ {
 		if m[i].kategori == category {
 			fmt.Printf(
@@ -334,6 +337,7 @@ func StatistikCafe(m *arrMenu, a *int) {
 				allCategory++
 				rataAllMenu += float64(m[i].harga)
 			}
+
 			fmt.Printf("Jumlah Semua Menu: %d\n", allCategory)
 			fmt.Printf("Jumlah Rata Rata Harga Semua Menu: %.2f\n", rataAllMenu/float64(allCategory))
 			return
@@ -341,12 +345,14 @@ func StatistikCafe(m *arrMenu, a *int) {
 			fmt.Println("Masukkan Kategori (makanan/minumanC/minumanNC)")
 			fmt.Scan(&category)
 			fmt.Println("")
+
 			for i = 0; i < *a; i++ {
 				if m[i].kategori == category {
 					x++
 					rataMenuCategory += float64(m[i].harga)
 				}
 			}
+
 			fmt.Printf("Jumlah Menu kategori %s: %d\n", category, x)
 			fmt.Printf("Jumlah Rata Rata Harga Menu kategori %s: %.2f\n", category, rataMenuCategory/float64(x))
 			return

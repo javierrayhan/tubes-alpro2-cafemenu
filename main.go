@@ -64,7 +64,10 @@ func main() {
 // - Jika valid, lanjut input detail menu (nama, kategori, harga, dll)
 // - Data disimpan secara berurutan berdasarkan index i
 func initData(m *arrMenu, a *int) {
-	var i, input int
+	var i, input, harga int
+	var nama, kategori, komposisi string
+	var ketersediaan bool
+
 	fmt.Println("<ID> <NamaMenu> <Kategori> <Harga> <Komposisi> <Ketersediaan(true/false)>")
 	fmt.Println("Ketik -1 untuk keluar")
 	i = 0
@@ -79,11 +82,17 @@ func initData(m *arrMenu, a *int) {
 		m[i].id = input
 
 		fmt.Scan(
-			&m[i].nama, 
-			&m[i].kategori, 
-			&m[i].harga, 
-			&m[i].komposisi, 
-			&m[i].ketersediaan)
+			&nama, 
+			&kategori, 
+			&harga, 
+			&komposisi, 
+			&ketersediaan)
+
+		m[i].nama = nama
+		m[i].kategori = kategori
+		m[i].harga = harga
+		m[i].komposisi = komposisi
+		m[i].ketersediaan = ketersediaan
 
 		i = i + 1
 	}
@@ -114,8 +123,9 @@ func initData(m *arrMenu, a *int) {
 // - Mengupdate nilai a jika penambahan berhasil
 // - Menampilkan pesan sesuai kondisi (penuh, duplicate, sukses, atau exit)
 func tambahData(m *arrMenu, a *int) {
-	var i, input int
-	var duplikat bool
+	var i, input, harga int
+	var nama, kategori, komposisi string
+	var duplikat, ketersediaan bool
 
 	if *a == NMAX {
 		fmt.Println("Data Penuh!")
@@ -142,21 +152,27 @@ func tambahData(m *arrMenu, a *int) {
 			}
 		}
 
-		if duplikat == true {
-			fmt.Println("ID sudah ada, data dilewati, coba lagi dengan ID berbeda: ")
-		} else {
+		if duplikat == false {
 			break
+		} else {
+			fmt.Println("ID sudah ada, silakan input ulang ID: ")
 		}
 	}
 
 	m[*a].id = input
 
 	fmt.Scan(
-		&m[*a].nama, 
-		&m[*a].kategori, 
-		&m[*a].harga, 
-		&m[*a].komposisi, 
-		&m[*a].ketersediaan)
+		&nama, 
+		&kategori, 
+		&harga, 
+		&komposisi, 
+		&ketersediaan)
+
+	m[*a].nama = nama
+	m[*a].kategori = kategori
+	m[*a].harga = harga
+	m[*a].komposisi = komposisi
+	m[*a].ketersediaan = ketersediaan
 
 	*a = *a + 1
 
@@ -220,7 +236,9 @@ func lihatData(m *arrMenu, a *int) {
 // - Menampilkan pesan "Data Berhasil Diedit" jika sukses
 // - Menampilkan "ID tidak ditemukan" jika data tidak ada
 func ubahData(m *arrMenu, a *int) {
-	var edit, i int
+	var edit, i, harga int
+	var nama, kategori, komposisi string
+	var ketersediaan bool
 
 	fmt.Print("Masukkan ID menu: ")
 	fmt.Println("Ketik -1 untuk keluar")
@@ -234,12 +252,18 @@ func ubahData(m *arrMenu, a *int) {
 	for i = 0; i < *a; i++ {
 		if m[i].id == edit {
 			fmt.Scan(
-				&m[i].id,
-				&m[i].nama,
-				&m[i].kategori,
-				&m[i].harga,
-				&m[i].komposisi,
-				&m[i].ketersediaan)
+				&nama,
+				&kategori,
+				&harga,
+				&komposisi,
+				&ketersediaan)
+			
+			m[i].id = edit
+			m[i].nama = nama
+			m[i].kategori = kategori
+			m[i].harga = harga
+			m[i].komposisi = komposisi
+			m[i].ketersediaan = ketersediaan
 
 			fmt.Println("Data Berhasil Diedit")
 			return

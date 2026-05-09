@@ -273,8 +273,51 @@ func ubahData(m *arrMenu, a *int) {
 	fmt.Println("ID tidak ditemukan")
 }
 
-func hapusData() {
+// hapusData -> menghapus 1 data menu berdasarkan ID yang dicari.
+//
+// Fungsi ini akan:
+// - Menerima input ID menu yang ingin dihapus
+// - Melakukan pencarian data menu berdasarkan ID (sequential search)
+// - Jika data ditemukan:
+//   - Elemen pada index tersebut akan dihapus
+//   - Seluruh elemen setelahnya akan digeser ke kiri (shift left)
+//   - Jumlah data (*a) akan dikurangi 1
+// - Jika ID tidak ditemukan, akan menampilkan pesan error
+//
+// Parameter:
+// m : pointer ke array menu yang menyimpan data
+// a : pointer ke jumlah data yang tersimpan
+// id : ID menu yang ingin dihapus
+//
+// Output:
+// - Data menu akan dihapus jika ID ditemukan
+// - Menampilkan pesan "Data berhasil dihapus" jika sukses
+// - Menampilkan "ID tidak ditemukan" jika data tidak ada
+func hapusData(m *arrMenu, a *int) {
+	var i, j, idTarget int
+	var found bool
 
+	fmt.Println("Masukan id yang akan dihapus:")
+	fmt.Scan(&idTarget)
+
+	for i = 0; i < *a; i++ {
+		if m[i].id == idTarget {
+			found = true
+
+			*a = *a - 1
+
+			for j = i; j < *a; j++ {
+				m[j] = m[j+1]
+			}
+
+			fmt.Printf("\n Data dengan id %d berhasil dihapus!\n", idTarget)
+			return
+		}
+	}
+
+	if found == false {
+		fmt.Println("ID tidak ditemukan!")
+	}
 }
 
 func adminMode(menu *arrMenu, a *int) {
@@ -307,7 +350,7 @@ func adminMode(menu *arrMenu, a *int) {
 			ubahData(menu, a)
 
 		case 3:
-			// belum diimplementasikan
+			hapusData(menu, a)
 
 		case 4:
 			lihatData(menu, a)

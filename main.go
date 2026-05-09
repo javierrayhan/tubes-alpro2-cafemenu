@@ -32,7 +32,7 @@ func main() {
 			adminMode(&Menu, &a)
 
 		case 2:
-			userMode()
+			userMode(&Menu, &a)
 
 		case 3:
 			exit()
@@ -215,6 +215,50 @@ func lihatData(m *arrMenu, a *int) {
 	fmt.Println("")
 }
 
+// lihatData -> menampilkan seluruh data menu yang tersimpan di dalam array arrMenu.
+//
+// Fungsi ini melakukan traversal dari index 0 sampai (a - 1) untuk menampilkan
+// setiap data menu yang sudah diinput.
+//
+// Data yang ditampilkan meliputi:
+// - ID menu
+// - Nama menu
+// - Kategori menu
+// - Harga
+// - Komposisi
+// - Status ketersediaan
+//
+// Parameter:
+// m : pointer ke array menu yang berisi data
+// a : pointer ke jumlah data yang tersimpan
+//
+// Output:
+// - Menampilkan seluruh data menu ke terminal dalam format terstruktur
+func lihatDataByCategory(m *arrMenu, a *int) {
+	var i int
+	var category string
+
+	fmt.Println("Masukkan Kategori (makanan/minumanC/minumanNC)")
+	fmt.Scan(&category)
+	fmt.Println("")
+	fmt.Println("Menu Kategori ", category)
+	for i = 0; i < *a; i++ {
+		if m[i].kategori == category {
+			fmt.Printf(
+				"%d %s %s %d %s %v\n",
+				m[i].id,
+				m[i].nama,
+				m[i].kategori,
+				m[i].harga,
+				m[i].komposisi,
+				m[i].ketersediaan)
+		}
+
+	}
+
+	fmt.Println("")
+}
+
 // ubahData -> melakukan update (perubahan) terhadap data menu berdasarkan ID yang dicari.
 //
 // Fungsi ini akan:
@@ -271,6 +315,49 @@ func ubahData(m *arrMenu, a *int) {
 	fmt.Println("ID tidak ditemukan")
 }
 
+func StatistikCafe(m *arrMenu, a *int) {
+	var category string
+	var i, x, mode, allCategory int
+	var rataAllMenu, rataMenuCategory float64
+
+	for {
+		fmt.Printf("%-4c %s\n", ' ', "Statistik Cafe")
+		fmt.Println("-------------------")
+		fmt.Println("1. Statistik Semua Menu")
+		fmt.Println("2. Statistik Menu By Kategori")
+		fmt.Println("3. Kembali")
+		fmt.Scan(&mode)
+		fmt.Println("")
+
+		if mode == 1 {
+			for i = 0; i < *a; i++ {
+				allCategory++
+				rataAllMenu += float64(m[i].harga)
+			}
+			fmt.Printf("Jumlah Semua Menu: %d\n", allCategory)
+			fmt.Printf("Jumlah Rata Rata Harga Semua Menu: %.2f\n", rataAllMenu/float64(allCategory))
+			return
+		} else if mode == 2 {
+			fmt.Println("Masukkan Kategori (makanan/minumanC/minumanNC)")
+			fmt.Scan(&category)
+			fmt.Println("")
+			for i = 0; i < *a; i++ {
+				if m[i].kategori == category {
+					x++
+					rataMenuCategory += float64(m[i].harga)
+				}
+			}
+			fmt.Printf("Jumlah Menu kategori %s: %d\n", category, x)
+			fmt.Printf("Jumlah Rata Rata Harga Menu kategori %s: %.2f\n", category, rataMenuCategory/float64(x))
+			return
+		} else if mode == 3 {
+			return
+		} else {
+			fmt.Println("Pilihan Tidak Valid")
+		}
+	}
+}
+
 // hapusData -> menghapus 1 data menu berdasarkan ID yang dicari.
 //
 // Fungsi ini akan:
@@ -291,6 +378,7 @@ func ubahData(m *arrMenu, a *int) {
 // - Data menu akan dihapus jika ID ditemukan
 // - Menampilkan pesan "Data berhasil dihapus" jika sukses
 // - Menampilkan "ID tidak ditemukan" jika data tidak ada
+
 func hapusData(m *arrMenu, a *int) {
 	var i, j, idTarget int
 	var found bool
@@ -329,7 +417,8 @@ func adminMode(menu *arrMenu, a *int) {
 		fmt.Println("2. Edit Data")
 		fmt.Println("3. Hapus Data")
 		fmt.Println("4. Lihat Data")
-		fmt.Println("5. Kembali")
+		fmt.Println("5. Lihat Statistik Cafe")
+		fmt.Println("6. Kembali")
 		fmt.Scan(&mode)
 		fmt.Println("")
 
@@ -354,6 +443,9 @@ func adminMode(menu *arrMenu, a *int) {
 			lihatData(menu, a)
 
 		case 5:
+			StatistikCafe(menu, a)
+
+		case 6:
 			return
 
 		default:
@@ -362,8 +454,32 @@ func adminMode(menu *arrMenu, a *int) {
 	}
 }
 
-func userMode() {
+func userMode(menu *arrMenu, a *int) {
+	var mode int
 
+	for {
+		fmt.Printf("%-4c %s\n", ' ', "Mode Pelanggan")
+		fmt.Println("-------------------")
+		fmt.Println("1. Lihat Menu")
+		fmt.Println("2. Search Menu By Category")
+		fmt.Println("3. Kembali")
+		fmt.Scan(&mode)
+		fmt.Println("")
+
+		switch mode {
+		case 1:
+			lihatData(menu, a)
+
+		case 2:
+			lihatDataByCategory(menu, a)
+
+		case 3:
+			return
+
+		default:
+			fmt.Println("Pilihan tidak valid!")
+		}
+	}
 }
 
 func exit() {

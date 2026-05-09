@@ -96,10 +96,13 @@ func initData(m *arrMenu, a *int) {
 //
 // Proses penambahan dilakukan dengan langkah berikut:
 // - Mengecek apakah data sudah penuh (mencapai NMAX)
-// - Membaca input ID menu dari user
+// - Menampilkan format input yang diminta user
+// - Membaca input ID menu dari user secara berulang sampai valid
 // - Jika input = -1, proses penambahan dibatalkan (exit manual)
 // - Melakukan pengecekan apakah ID sudah ada (menghindari duplikasi)
-// - Jika ID belum ada, data menu lengkap akan dimasukkan ke array
+// - Jika ID sudah ada, user diminta memasukkan ID lain (loop sampai valid)
+// - Jika ID belum ada, sistem lanjut ke input detail menu
+// - Data menu (nama, kategori, harga, komposisi, ketersediaan) dimasukkan ke array
 // - Jumlah data (*a) akan bertambah 1 setelah data berhasil ditambahkan
 //
 // Parameter:
@@ -112,7 +115,7 @@ func initData(m *arrMenu, a *int) {
 // - Menampilkan pesan sesuai kondisi (penuh, duplicate, sukses, atau exit)
 func tambahData(m *arrMenu, a *int) {
 	var i, input int
-	var duplikat bool = false
+	var duplikat bool
 
 	if *a == NMAX {
 		fmt.Println("Data Penuh!")
@@ -121,37 +124,44 @@ func tambahData(m *arrMenu, a *int) {
 
 	fmt.Println("<ID> <NamaMenu> <Kategori> <Harga> <Komposisi> <Ketersediaan(true/false)>")
 	fmt.Println("Ketik -1 untuk keluar")
-	fmt.Scan(&input)
 
-	if input == -1 {
-		fmt.Println("Keluar dari tambah data!")
-		return
-	}
+	for {
+		fmt.Scan(&input)
 
-	for i = 0; i < *a; i++ {
-		if m[i].id == input {
-			duplikat = true
+		duplikat = false
 
-			fmt.Println("ID sudah ada, data dilewati!")
+		if input == -1 {
+			fmt.Println("Keluar dari tambah data!")
+			return
+		}
 
+		for i = 0; i < *a; i++ {
+			if m[i].id == input {
+				duplikat = true
+				break
+			}
+		}
+
+		if duplikat == true {
+			fmt.Println("ID sudah ada, data dilewati, coba lagi dengan ID berbeda: ")
+		} else {
 			break
 		}
 	}
 
-	if duplikat == false{
-		m[*a].id = input
+	m[*a].id = input
 
-		fmt.Scan(
-			&m[*a].nama, 
-			&m[*a].kategori, 
-			&m[*a].harga, 
-			&m[*a].komposisi, 
-			&m[*a].ketersediaan)
+	fmt.Scan(
+		&m[*a].nama, 
+		&m[*a].kategori, 
+		&m[*a].harga, 
+		&m[*a].komposisi, 
+		&m[*a].ketersediaan)
 
-		*a = *a + 1
+	*a = *a + 1
 
-		fmt.Println("Menu baru ditambahkan!")
-	}
+	fmt.Println("Menu baru ditambahkan!")
+
 }
 
 
@@ -223,7 +233,6 @@ func ubahData(m *arrMenu, a *int) {
 
 	for i = 0; i < *a; i++ {
 		if m[i].id == edit {
-
 			fmt.Scan(
 				&m[i].id,
 				&m[i].nama,

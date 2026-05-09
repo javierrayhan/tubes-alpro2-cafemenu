@@ -36,6 +36,7 @@ func main() {
 
 		case 3:
 			exit()
+			return
 
 		default:
 			fmt.Println("Mode tidak valid!")

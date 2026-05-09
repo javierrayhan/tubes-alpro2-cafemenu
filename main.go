@@ -76,17 +76,17 @@ func initData(m *arrMenu, a *int) {
 	for {
 		fmt.Scan(&input)
 
-		if i >= NMAX || input == -1{
+		if i >= NMAX || input == -1 {
 			break
 		}
 
 		m[i].id = input
 
 		fmt.Scan(
-			&nama, 
-			&kategori, 
-			&harga, 
-			&komposisi, 
+			&nama,
+			&kategori,
+			&harga,
+			&komposisi,
 			&ketersediaan)
 
 		m[i].nama = nama
@@ -100,7 +100,6 @@ func initData(m *arrMenu, a *int) {
 
 	*a = i
 }
-
 
 // tambahData -> menambahkan 1 data menu baru ke dalam array arrMenu.
 //
@@ -133,10 +132,10 @@ func tambahData(m *arrMenu, a *int) {
 		return
 	}
 
-	fmt.Println("<ID> <NamaMenu> <Kategori> <Harga> <Komposisi> <Ketersediaan(true/false)>")
 	fmt.Println("Ketik -1 untuk keluar")
 
 	for {
+		fmt.Print("Masukkan ID menu: ")
 		fmt.Scan(&input)
 
 		duplikat = false
@@ -161,14 +160,13 @@ func tambahData(m *arrMenu, a *int) {
 	}
 
 	m[*a].id = input
-
+	fmt.Println("<NamaMenu> <Kategori> <Harga> <Komposisi> <Ketersediaan(true/false)>")
 	fmt.Scan(
-		&nama, 
-		&kategori, 
-		&harga, 
-		&komposisi, 
+		&nama,
+		&kategori,
+		&harga,
+		&komposisi,
 		&ketersediaan)
-
 	m[*a].nama = nama
 	m[*a].kategori = kategori
 	m[*a].harga = harga
@@ -180,7 +178,6 @@ func tambahData(m *arrMenu, a *int) {
 	fmt.Println("Menu baru ditambahkan!")
 
 }
-
 
 // lihatData -> menampilkan seluruh data menu yang tersimpan di dalam array arrMenu.
 //
@@ -206,18 +203,17 @@ func lihatData(m *arrMenu, a *int) {
 
 	for i = 0; i < *a; i++ {
 		fmt.Printf(
-			"%d %s %s %d %s %v\n", 
-			m[i].id, 
-			m[i].nama, 
+			"%d %s %s %d %s %v\n",
+			m[i].id,
+			m[i].nama,
 			m[i].kategori,
-			m[i].harga, 
-			m[i].komposisi, 
+			m[i].harga,
+			m[i].komposisi,
 			m[i].ketersediaan)
 	}
 
 	fmt.Println("")
 }
-
 
 // ubahData -> melakukan update (perubahan) terhadap data menu berdasarkan ID yang dicari.
 //
@@ -241,8 +237,8 @@ func ubahData(m *arrMenu, a *int) {
 	var nama, kategori, komposisi string
 	var ketersediaan bool
 
-	fmt.Print("Masukkan ID menu: ")
 	fmt.Println("Ketik -1 untuk keluar")
+	fmt.Print("Masukkan ID menu: ")
 	fmt.Scan(&edit)
 
 	if edit == -1 {
@@ -252,13 +248,14 @@ func ubahData(m *arrMenu, a *int) {
 
 	for i = 0; i < *a; i++ {
 		if m[i].id == edit {
+			fmt.Println("<NamaMenu> <Kategori> <Harga> <Komposisi> <Ketersediaan(true/false)>")
 			fmt.Scan(
 				&nama,
 				&kategori,
 				&harga,
 				&komposisi,
 				&ketersediaan)
-			
+
 			m[i].id = edit
 			m[i].nama = nama
 			m[i].kategori = kategori
@@ -298,7 +295,7 @@ func hapusData(m *arrMenu, a *int) {
 	var i, j, idTarget int
 	var found bool
 
-	fmt.Println("Masukan id yang akan dihapus:")
+	fmt.Println("Masukan id yang akan dihapus: ")
 	fmt.Scan(&idTarget)
 
 	for i = 0; i < *a; i++ {
@@ -323,7 +320,7 @@ func hapusData(m *arrMenu, a *int) {
 
 func adminMode(menu *arrMenu, a *int) {
 	var mode int
-	
+
 	for {
 		fmt.Printf("%-4c %s\n", ' ', "Mode Admin")
 		fmt.Println("-------------------")
@@ -346,7 +343,7 @@ func adminMode(menu *arrMenu, a *int) {
 			} else {
 				tambahData(menu, a)
 			}
-			
+
 		case 2:
 			ubahData(menu, a)
 

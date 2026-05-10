@@ -269,7 +269,7 @@ func StatistikCafe(m *arrMenu, a *int) {
 			fmt.Printf("Jumlah Rata Rata Harga Semua Menu: %.2f\n", rataAllMenu/float64(allCategory))
 			return
 		} else if mode == 2 {
-			fmt.Println("Masukkan Kategori (food/coffee/noncoffee)")
+			fmt.Println("Masukkan Kategori (makanan/minumanC/minumanNC)")
 			fmt.Scan(&category)
 			fmt.Println("")
 
@@ -292,7 +292,7 @@ func StatistikCafe(m *arrMenu, a *int) {
 }
 
 //============ Lihat menu by Category ============
-// category by binary binggung bngt buset dah wkwkwkkw
+// category by binary dan Sequential
 func lihatDataByCategory(m *arrMenu, a *int) {
 	var i, mode int
 	var category string
@@ -303,7 +303,7 @@ func lihatDataByCategory(m *arrMenu, a *int) {
 
 	switch mode {
 	case 1:
-		fmt.Println("Masukkan Kategori (food/coffee/noncoffee)")
+		fmt.Println("Masukkan Kategori (makanan/minumanC/minumanNC)")
 		fmt.Scan(&category)
 		fmt.Println("")
 		fmt.Println("Menu Kategori ", category)

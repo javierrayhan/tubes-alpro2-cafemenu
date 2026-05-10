@@ -45,25 +45,7 @@ func main() {
 
 }
 
-// initData -> mengisi data menu ke dalam array arrMenu secara sequential.
-// Data dimasukkan oleh user melalui input terminal.
-//
-// Proses berhenti jika:
-// - user memasukkan -1 (sentinel value untuk keluar)
-// - jumlah data sudah mencapai NMAX (kapasitas maksimum array)
-//
-// Parameter:
-// m : pointer ke array menu yang akan diisi
-// a : pointer ke jumlah data yang berhasil dimasukkan
-//
-// Output:
-// - array m akan terisi data menu
-// - nilai a akan berisi jumlah data yang berhasil disimpan
-//
-// Mekanisme:
-// - Input ID menu terlebih dahulu
-// - Jika valid, lanjut input detail menu (nama, kategori, harga, dll)
-// - Data disimpan secara berurutan berdasarkan index i
+//============ Manage Data ============
 func initData(m *arrMenu, a *int) {
 	var i, input, harga int
 	var nama, kategori, komposisi string
@@ -101,27 +83,6 @@ func initData(m *arrMenu, a *int) {
 	*a = i
 }
 
-// tambahData -> menambahkan 1 data menu baru ke dalam array arrMenu.
-//
-// Proses penambahan dilakukan dengan langkah berikut:
-// - Mengecek apakah data sudah penuh (mencapai NMAX)
-// - Menampilkan format input yang diminta user
-// - Membaca input ID menu dari user secara berulang sampai valid
-// - Jika input = -1, proses penambahan dibatalkan (exit manual)
-// - Melakukan pengecekan apakah ID sudah ada (menghindari duplikasi)
-// - Jika ID sudah ada, user diminta memasukkan ID lain (loop sampai valid)
-// - Jika ID belum ada, sistem lanjut ke input detail menu
-// - Data menu (nama, kategori, harga, komposisi, ketersediaan) dimasukkan ke array
-// - Jumlah data (*a) akan bertambah 1 setelah data berhasil ditambahkan
-//
-// Parameter:
-// m : pointer ke array menu yang menyimpan seluruh data
-// a : pointer ke jumlah data yang sedang tersimpan
-//
-// Output:
-// - Menambahkan data baru ke array jika valid
-// - Mengupdate nilai a jika penambahan berhasil
-// - Menampilkan pesan sesuai kondisi (penuh, duplicate, sukses, atau exit)
 func tambahData(m *arrMenu, a *int) {
 	var i, input, harga int
 	var nama, kategori, komposisi string
@@ -181,25 +142,6 @@ func tambahData(m *arrMenu, a *int) {
 
 }
 
-// lihatData -> menampilkan seluruh data menu yang tersimpan di dalam array arrMenu.
-//
-// Fungsi ini melakukan traversal dari index 0 sampai (a - 1) untuk menampilkan
-// setiap data menu yang sudah diinput.
-//
-// Data yang ditampilkan meliputi:
-// - ID menu
-// - Nama menu
-// - Kategori menu
-// - Harga
-// - Komposisi
-// - Status ketersediaan
-//
-// Parameter:
-// m : pointer ke array menu yang berisi data
-// a : pointer ke jumlah data yang tersimpan
-//
-// Output:
-// - Menampilkan seluruh data menu ke terminal dalam format terstruktur
 func lihatData(m *arrMenu, a *int) {
 	var i int
 
@@ -217,68 +159,6 @@ func lihatData(m *arrMenu, a *int) {
 	fmt.Println("")
 }
 
-// lihatData -> menampilkan seluruh data menu yang tersimpan di dalam array arrMenu.
-//
-// Fungsi ini melakukan traversal dari index 0 sampai (a - 1) untuk menampilkan
-// setiap data menu yang sudah diinput.
-//
-// Data yang ditampilkan meliputi:
-// - ID menu
-// - Nama menu
-// - Kategori menu
-// - Harga
-// - Komposisi
-// - Status ketersediaan
-//
-// Parameter:
-// m : pointer ke array menu yang berisi data
-// a : pointer ke jumlah data yang tersimpan
-//
-// Output:
-// - Menampilkan seluruh data menu ke terminal dalam format terstruktur
-func lihatDataByCategory(m *arrMenu, a *int) {
-	var i int
-	var category string
-
-	fmt.Println("Masukkan Kategori (food/coffee/noncoffee)")
-	fmt.Scan(&category)
-	fmt.Println("")
-	fmt.Println("Menu Kategori ", category)
-
-	for i = 0; i < *a; i++ {
-		if m[i].kategori == category {
-			fmt.Printf(
-				"%d %s %s %d %s %v\n",
-				m[i].id,
-				m[i].nama,
-				m[i].kategori,
-				m[i].harga,
-				m[i].komposisi,
-				m[i].ketersediaan)
-		}
-
-	}
-
-	fmt.Println("")
-}
-
-// ubahData -> melakukan update (perubahan) terhadap data menu berdasarkan ID yang dicari.
-//
-// Fungsi ini akan:
-// - Menerima input ID menu yang ingin diubah
-// - Jika input = -1, proses ubdah data dibatalkan (exit manual)
-// - Melakukan pencarian data menu berdasarkan ID (sequential search)
-// - Jika data ditemukan, seluruh field menu akan diperbarui dengan input baru
-// - Jika ID tidak ditemukan, akan menampilkan pesan error
-//
-// Parameter:
-// m : pointer ke array menu yang menyimpan data
-// a : pointer ke jumlah data yang tersimpan
-//
-// Output:
-// - Data menu akan diperbarui jika ID ditemukan
-// - Menampilkan pesan "Data Berhasil Diedit" jika sukses
-// - Menampilkan "ID tidak ditemukan" jika data tidak ada
 func ubahData(m *arrMenu, a *int) {
 	var edit, i, harga int
 	var nama, kategori, komposisi string
@@ -318,6 +198,34 @@ func ubahData(m *arrMenu, a *int) {
 	fmt.Println("ID tidak ditemukan")
 }
 
+func hapusData(m *arrMenu, a *int) {
+	var i, j, idTarget int
+	var found bool
+
+	fmt.Println("Masukan id yang akan dihapus: ")
+	fmt.Scan(&idTarget)
+
+	for i = 0; i < *a; i++ {
+		if m[i].id == idTarget {
+			found = true
+
+			*a = *a - 1
+
+			for j = i; j < *a; j++ {
+				m[j] = m[j+1]
+			}
+
+			fmt.Printf("\n Data dengan id %d berhasil dihapus!\n", idTarget)
+			return
+		}
+	}
+
+	if found == false {
+		fmt.Println("ID tidak ditemukan!")
+	}
+}
+
+//============ Statistik ============
 func StatistikCafe(m *arrMenu, a *int) {
 	var category string
 	var i, x, mode, allCategory int
@@ -364,54 +272,114 @@ func StatistikCafe(m *arrMenu, a *int) {
 	}
 }
 
-// hapusData -> menghapus 1 data menu berdasarkan ID yang dicari.
-//
-// Fungsi ini akan:
-// - Menerima input ID menu yang ingin dihapus
-// - Melakukan pencarian data menu berdasarkan ID (sequential search)
-// - Jika data ditemukan:
-//   - Elemen pada index tersebut akan dihapus
-//   - Seluruh elemen setelahnya akan digeser ke kiri (shift left)
-//   - Jumlah data (*a) akan dikurangi 1
-// - Jika ID tidak ditemukan, akan menampilkan pesan error
-//
-// Parameter:
-// m : pointer ke array menu yang menyimpan data
-// a : pointer ke jumlah data yang tersimpan
-// id : ID menu yang ingin dihapus
-//
-// Output:
-// - Data menu akan dihapus jika ID ditemukan
-// - Menampilkan pesan "Data berhasil dihapus" jika sukses
-// - Menampilkan "ID tidak ditemukan" jika data tidak ada
+//============ Lihat menu by Category ============
+// category by binary binggung bngt buset dah wkwkwkkw
+func lihatDataByCategory(m *arrMenu, a *int) {
+	var i int
+	var category string
 
-func hapusData(m *arrMenu, a *int) {
-	var i, j, idTarget int
-	var found bool
-
-	fmt.Println("Masukan id yang akan dihapus: ")
-	fmt.Scan(&idTarget)
+	fmt.Println("Masukkan Kategori (food/coffee/noncoffee)")
+	fmt.Scan(&category)
+	fmt.Println("")
+	fmt.Println("Menu Kategori ", category)
 
 	for i = 0; i < *a; i++ {
-		if m[i].id == idTarget {
-			found = true
-
-			*a = *a - 1
-
-			for j = i; j < *a; j++ {
-				m[j] = m[j+1]
-			}
-
-			fmt.Printf("\n Data dengan id %d berhasil dihapus!\n", idTarget)
-			return
+		if m[i].kategori == category {
+			fmt.Printf(
+				"%d %s %s %d %s %v\n",
+				m[i].id,
+				m[i].nama,
+				m[i].kategori,
+				m[i].harga,
+				m[i].komposisi,
+				m[i].ketersediaan)
 		}
+
 	}
 
-	if found == false {
-		fmt.Println("ID tidak ditemukan!")
+	fmt.Println("")
+}
+
+//============ Lihat menu by price ============
+func hargaSelectionSort(m *arrMenu, a *int) {
+	var i, j, k, min int
+	var temp Menu
+
+	for i = 0; i < *a-1; i++ {
+		min = i
+
+		for j = i + 1; j < *a; j++ {
+			if m[j].harga < m[min].harga {
+				min = j
+			}
+		}
+
+		temp = m[i]
+		m[i] = m[min]
+		m[min] = temp
+	}
+
+	for k = 0; k < *a; k++ {
+		fmt.Printf(
+			"%d %s %s %d %s %v\n",
+			m[k].id,
+			m[k].nama,
+			m[k].kategori,
+			m[k].harga,
+			m[k].komposisi,
+			m[k].ketersediaan)
+	}
+
+}
+
+func hargaInsertionSort(m *arrMenu, a *int) {
+	var i, j, k int
+	var temp Menu
+
+	for i = 1; i < *a; i++ {
+		temp = m[i]
+		j = i - 1
+
+		for j >= 0 && m[j].harga > temp.harga {
+			m[j+1] = m[j]
+			j = j - 1
+		} 
+
+		m[j+1] = temp
+	}
+
+	for k = 0; k < *a; k++ {
+		fmt.Printf(
+			"%d %s %s %d %s %v\n",
+			m[k].id,
+			m[k].nama,
+			m[k].kategori,
+			m[k].harga,
+			m[k].komposisi,
+			m[k].ketersediaan)
 	}
 }
 
+func lihatDataByPrice(m *arrMenu, a *int) {
+	var mode int
+
+	fmt.Println("Pilih metode sort:\n1. Selection\n2. Insertion ")
+	fmt.Scan(&mode)
+	fmt.Println("")
+
+	switch mode {
+	case 1:
+		hargaSelectionSort(m, a)
+
+	case 2:
+		hargaInsertionSort(m, a)
+
+	default:
+		fmt.Println("Pilihan tidak valid!")
+	}
+}
+
+//============ Admin Mode ============
 func adminMode(menu *arrMenu, a *int) {
 	var mode int
 
@@ -460,6 +428,7 @@ func adminMode(menu *arrMenu, a *int) {
 	}
 }
 
+//============ User Mode ============
 func userMode(menu *arrMenu, a *int) {
 	var mode int
 
@@ -468,7 +437,8 @@ func userMode(menu *arrMenu, a *int) {
 		fmt.Println("-------------------")
 		fmt.Println("1. Lihat Menu")
 		fmt.Println("2. Search Menu By Category")
-		fmt.Println("3. Kembali")
+		fmt.Println("3. Search menu By Descending Price")
+		fmt.Println("4. Kembali")
 		fmt.Scan(&mode)
 		fmt.Println("")
 
@@ -480,6 +450,9 @@ func userMode(menu *arrMenu, a *int) {
 			lihatDataByCategory(menu, a)
 
 		case 3:
+			lihatDataByPrice(menu, a)
+
+		case 4:
 			return
 
 		default:

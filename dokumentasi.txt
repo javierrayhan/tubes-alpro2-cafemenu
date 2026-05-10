@@ -1,0 +1,107 @@
+// initData -> mengisi data menu ke dalam array arrMenu secara sequential.
+// Data dimasukkan oleh user melalui input terminal.
+//
+// Proses berhenti jika:
+// - user memasukkan -1 (sentinel value untuk keluar)
+// - jumlah data sudah mencapai NMAX (kapasitas maksimum array)
+//
+// Parameter:
+// m : pointer ke array menu yang akan diisi
+// a : pointer ke jumlah data yang berhasil dimasukkan
+//
+// Output:
+// - array m akan terisi data menu
+// - nilai a akan berisi jumlah data yang berhasil disimpan
+//
+// Mekanisme:
+// - Input ID menu terlebih dahulu
+// - Jika valid, lanjut input detail menu (nama, kategori, harga, dll)
+// - Data disimpan secara berurutan berdasarkan index i
+
+// tambahData -> menambahkan 1 data menu baru ke dalam array arrMenu.
+//
+// Proses penambahan dilakukan dengan langkah berikut:
+// - Mengecek apakah data sudah penuh (mencapai NMAX)
+// - Menampilkan format input yang diminta user
+// - Membaca input ID menu dari user secara berulang sampai valid
+// - Jika input = -1, proses penambahan dibatalkan (exit manual)
+// - Melakukan pengecekan apakah ID sudah ada (menghindari duplikasi)
+// - Jika ID sudah ada, user diminta memasukkan ID lain (loop sampai valid)
+// - Jika ID belum ada, sistem lanjut ke input detail menu
+// - Data menu (nama, kategori, harga, komposisi, ketersediaan) dimasukkan ke array
+// - Jumlah data (*a) akan bertambah 1 setelah data berhasil ditambahkan
+//
+// Parameter:
+// m : pointer ke array menu yang menyimpan seluruh data
+// a : pointer ke jumlah data yang sedang tersimpan
+//
+// Output:
+// - Menambahkan data baru ke array jika valid
+// - Mengupdate nilai a jika penambahan berhasil
+// - Menampilkan pesan sesuai kondisi (penuh, duplicate, sukses, atau exit)
+
+// lihatData -> menampilkan seluruh data menu yang tersimpan di dalam array arrMenu.
+//
+// Fungsi ini melakukan traversal dari index 0 sampai (a - 1) untuk menampilkan
+// setiap data menu yang sudah diinput.
+//
+// Data yang ditampilkan meliputi:
+// - ID menu
+// - Nama menu
+// - Kategori menu
+// - Harga
+// - Komposisi
+// - Status ketersediaan
+//
+// Parameter:
+// m : pointer ke array menu yang berisi data
+// a : pointer ke jumlah data yang tersimpan
+//
+// Output:
+// - Menampilkan seluruh data menu ke terminal dalam format terstruktur
+
+// ubahData -> melakukan update (perubahan) terhadap data menu berdasarkan ID yang dicari.
+//
+// Fungsi ini akan:
+// - Menerima input ID menu yang ingin diubah
+// - Jika input = -1, proses ubdah data dibatalkan (exit manual)
+// - Melakukan pencarian data menu berdasarkan ID (sequential search)
+// - Jika data ditemukan, seluruh field menu akan diperbarui dengan input baru
+// - Jika ID tidak ditemukan, akan menampilkan pesan error
+//
+// Parameter:
+// m : pointer ke array menu yang menyimpan data
+// a : pointer ke jumlah data yang tersimpan
+//
+// Output:
+// - Data menu akan diperbarui jika ID ditemukan
+// - Menampilkan pesan "Data Berhasil Diedit" jika sukses
+// - Menampilkan "ID tidak ditemukan" jika data tidak ada
+
+// hapusData -> menghapus 1 data menu berdasarkan ID yang dicari.
+//
+// Fungsi ini akan:
+// - Menerima input ID menu yang ingin dihapus
+// - Melakukan pencarian data menu berdasarkan ID (sequential search)
+// - Jika data ditemukan:
+//   - Elemen pada index tersebut akan dihapus
+//   - Seluruh elemen setelahnya akan digeser ke kiri (shift left)
+//   - Jumlah data (*a) akan dikurangi 1
+// - Jika ID tidak ditemukan, akan menampilkan pesan error
+//
+// Parameter:
+// m : pointer ke array menu yang menyimpan data
+// a : pointer ke jumlah data yang tersimpan
+// id : ID menu yang ingin dihapus
+//
+// Output:
+// - Data menu akan dihapus jika ID ditemukan
+// - Menampilkan pesan "Data berhasil dihapus" jika sukses
+// - Menampilkan "ID tidak ditemukan" jika data tidak ada
+
+fungsi yg belum didokumentasi:
+statistik
+dataByCategory
+selectionSort
+insertionSort
+dataByPrice

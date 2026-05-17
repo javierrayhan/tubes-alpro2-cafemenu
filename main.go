@@ -351,7 +351,7 @@ func categoryBinarySearch(m *arrMenu, a *int) {
 		m[min] = temp
 	}
 
-	fmt.Println("Masukkan Kategori (makanan/minumanC/minumanNC)")
+	fmt.Println("Masukkan Kategori (food/coffee/noncoffee)")
 	fmt.Scan(&kategori)
 	fmt.Println("")
 	fmt.Println("Menu Kategori ", kategori)

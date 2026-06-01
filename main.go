@@ -192,7 +192,7 @@ func lihatData(m *arrMenu, a *int) {
 
 func ubahData(m *arrMenu, a *int) {
 	var edit, i int
-	
+
 	fmt.Println("Range ID untuk makanan: 1-99")
 	fmt.Println("Range ID untuk minuman non kopi: 100-199")
 	fmt.Println("Range ID untuk minuman kopi: 200-299")
@@ -275,7 +275,7 @@ func StatistikCafe(m *arrMenu, a *int) {
 			fmt.Printf("Jumlah Rata Rata Harga Semua Menu: %.2f\n", rataAllMenu/float64(allCategory))
 			return
 		} else if mode == 2 {
-			fmt.Println("Masukkan Kategori (food/coffee/noncoffee)")
+			fmt.Println("Masukkan Kategori (food/noncoffee/coffee)")
 			fmt.Scan(&category)
 			fmt.Println("")
 
@@ -357,7 +357,7 @@ func categoryBinarySearch(m *arrMenu, a *int) {
 		m[min] = temp
 	}
 
-	fmt.Println("Masukkan Kategori (food/coffee/noncoffee)")
+	fmt.Println("Masukkan Kategori (food/noncoffee/coffee)")
 	fmt.Scan(&kategori)
 	fmt.Println("")
 	fmt.Println("Menu Kategori ", kategori)

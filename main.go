@@ -75,7 +75,7 @@ func initData(m *arrMenu, a *int) {
 				&komposisi,
 				&ketersediaan)
 
-			if (kategori == "makanan" && (input > 0 && input < 100)) || (kategori == "minumanNC" && (input >= 100 && input < 200)) || (kategori == "minumanC" && (input >= 200 && input < 300)) {
+			if (kategori == "food" && (input > 0 && input < 100)) || (kategori == "noncoffee" && (input >= 100 && input < 200)) || (kategori == "coffee" && (input >= 200 && input < 300)) {
 				m[i].id = input
 				m[i].nama = nama
 				m[i].kategori = kategori
@@ -109,6 +109,9 @@ func tambahData(m *arrMenu, a *int) {
 		return
 	}
 
+	fmt.Println("Range ID untuk makanan: 1-99")
+	fmt.Println("Range ID untuk minuman non kopi: 100-199")
+	fmt.Println("Range ID untuk minuman kopi: 200-299")
 	fmt.Println("Ketik -1 untuk keluar")
 
 	for {
@@ -189,7 +192,10 @@ func lihatData(m *arrMenu, a *int) {
 
 func ubahData(m *arrMenu, a *int) {
 	var edit, i int
-
+	
+	fmt.Println("Range ID untuk makanan: 1-99")
+	fmt.Println("Range ID untuk minuman non kopi: 100-199")
+	fmt.Println("Range ID untuk minuman kopi: 200-299")
 	fmt.Println("Ketik -1 untuk keluar")
 	fmt.Print("Masukkan ID menu: ")
 	fmt.Scan(&edit)
@@ -303,7 +309,7 @@ func lihatDataByCategory(m *arrMenu, a *int) {
 
 	switch mode {
 	case 1:
-		fmt.Println("Masukkan Kategori (food/coffee/noncoffee)")
+		fmt.Println("Masukkan Kategori (food/noncoffee/coffee)")
 		fmt.Scan(&category)
 		fmt.Println("")
 		fmt.Println("Menu Kategori ", category)

@@ -522,7 +522,7 @@ func userMode(menu *arrMenu, a *int) {
 		fmt.Println("-------------------")
 		fmt.Println("1. Lihat Menu")
 		fmt.Println("2. Search Menu By Category")
-		fmt.Println("3. Search menu By Descending Price")
+		fmt.Println("3. Search menu By Ascending Price")
 		fmt.Println("4. Kembali")
 		fmt.Scan(&mode)
 		fmt.Println("")

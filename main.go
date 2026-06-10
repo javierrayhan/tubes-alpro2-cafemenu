@@ -54,9 +54,9 @@ func initData(m *arrMenu, a *int) {
 	var ketersediaan bool
 
 	if *a == 0 {
-		fmt.Println("Range ID untuk makanan: 1-99")
-		fmt.Println("Range ID untuk minuman non kopi: 100-199")
-		fmt.Println("Range ID untuk minuman kopi: 200-299")
+		fmt.Println("Range ID untuk food: 1-99")
+		fmt.Println("Range ID untuk noncoffee: 100-199")
+		fmt.Println("Range ID untuk coffee: 200-299")
 		fmt.Println("<ID> <NamaMenu> <Kategori> <Harga> <Komposisi> <Ketersediaan(true/false)>")
 		fmt.Println("Ketik -1 untuk keluar")
 		i = 0
@@ -109,9 +109,9 @@ func tambahData(m *arrMenu, a *int) {
 		return
 	}
 
-	fmt.Println("Range ID untuk makanan: 1-99")
-	fmt.Println("Range ID untuk minuman non kopi: 100-199")
-	fmt.Println("Range ID untuk minuman kopi: 200-299")
+	fmt.Println("Range ID untuk food: 1-99")
+	fmt.Println("Range ID untuk noncoffee: 100-199")
+	fmt.Println("Range ID untuk coffee: 200-299")
 	fmt.Println("Ketik -1 untuk keluar")
 
 	for {
@@ -149,7 +149,7 @@ func tambahData(m *arrMenu, a *int) {
 		&komposisi,
 		&ketersediaan)
 	fmt.Println("")
-	if (kategori == "makanan" && (input > 0 && input < 100)) || (kategori == "minumanNC" && (input >= 100 && input < 200)) || (kategori == "minumanC" && (input >= 200 && input < 300)) {
+	if (kategori == "food" && (input > 0 && input < 100)) || (kategori == "noncoffee" && (input >= 100 && input < 200)) || (kategori == "coffee" && (input >= 200 && input < 300)) {
 		m[*a].id = input
 		m[*a].nama = nama
 		m[*a].kategori = kategori
@@ -193,9 +193,9 @@ func lihatData(m *arrMenu, a *int) {
 func ubahData(m *arrMenu, a *int) {
 	var edit, i int
 
-	fmt.Println("Range ID untuk makanan: 1-99")
-	fmt.Println("Range ID untuk minuman non kopi: 100-199")
-	fmt.Println("Range ID untuk minuman kopi: 200-299")
+	fmt.Println("Range ID untuk food: 1-99")
+	fmt.Println("Range ID untuk noncoffee: 100-199")
+	fmt.Println("Range ID untuk coffee: 200-299")
 	fmt.Println("Ketik -1 untuk keluar")
 	fmt.Print("Masukkan ID menu: ")
 	fmt.Scan(&edit)

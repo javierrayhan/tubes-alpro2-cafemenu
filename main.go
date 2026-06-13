@@ -19,7 +19,49 @@ func main() {
 	var mode, a int
 	var Menu arrMenu
 
-	a = 0
+	Menu[0].id = 1
+	Menu[0].nama = "NasiGoreng"
+	Menu[0].kategori = "food"
+	Menu[0].harga = 15000
+	Menu[0].komposisi = "Nasi, Telur, Ayam, Bumbu"
+	Menu[0].ketersediaan = true
+
+	Menu[1].id = 2
+	Menu[1].nama = "MieGoreng"
+	Menu[1].kategori = "food"
+	Menu[1].harga = 12000
+	Menu[1].komposisi = "Mie, Telur, Ayam, Bumbu"
+	Menu[1].ketersediaan = false
+
+	Menu[2].id = 100
+	Menu[2].nama = "EsTehManis"
+	Menu[2].kategori = "noncoffe"
+	Menu[2].harga = 7000
+	Menu[2].komposisi = "Air, Gula, Es, Teh"
+	Menu[2].ketersediaan = true
+
+	Menu[3].id = 101
+	Menu[3].nama = "EsJeruk"
+	Menu[3].kategori = "noncoffe"
+	Menu[3].harga = 10000
+	Menu[3].komposisi = "Air, Gula, Es, Jeruk"
+	Menu[3].ketersediaan = false
+
+	Menu[4].id = 202
+	Menu[4].nama = "KopiHitam"
+	Menu[4].kategori = "coffe"
+	Menu[4].harga = 15000
+	Menu[4].komposisi = "Kopi, Air"
+	Menu[4].ketersediaan = true
+
+	Menu[5].id = 203
+	Menu[5].nama = "Cappuccino"
+	Menu[5].kategori = "coffe"
+	Menu[5].harga = 25000
+	Menu[5].komposisi = "Air, Kopi, Susu"
+	Menu[5].ketersediaan = false
+
+	a = 6
 
 	for {
 		fmt.Printf("%-4c %s\n", ' ', "Cafe Menu")
@@ -47,57 +89,6 @@ func main() {
 
 }
 
-//============ Manage Data ============
-func initData(m *arrMenu, a *int) {
-	var i, input, harga int
-	var nama, kategori, komposisi string
-	var ketersediaan bool
-
-	if *a == 0 {
-		fmt.Println("Range ID untuk makanan: 1-99")
-		fmt.Println("Range ID untuk minuman non kopi: 100-199")
-		fmt.Println("Range ID untuk minuman kopi: 200-299")
-		fmt.Println("<ID> <NamaMenu> <Kategori> <Harga> <Komposisi> <Ketersediaan(true/false)>")
-		fmt.Println("Ketik -1 untuk keluar")
-		i = 0
-
-		for {
-			fmt.Scan(&input)
-
-			if i >= NMAX || input == -1 {
-				break
-			}
-
-			fmt.Scan(
-				&nama,
-				&kategori,
-				&harga,
-				&komposisi,
-				&ketersediaan)
-
-			if (kategori == "makanan" && (input > 0 && input < 100)) || (kategori == "minumanNC" && (input >= 100 && input < 200)) || (kategori == "minumanC" && (input >= 200 && input < 300)) {
-				m[i].id = input
-				m[i].nama = nama
-				m[i].kategori = kategori
-				m[i].harga = harga
-				m[i].komposisi = komposisi
-				m[i].ketersediaan = ketersediaan
-
-				i = i + 1
-			} else {
-				fmt.Println("Kategori tidak sesuai dengan range ID, data tidak disimpan!")
-			}
-
-		}
-
-		*a = i
-	} else {
-		fmt.Println("Data sudah diinisialisasi!")
-		return
-	}
-
-}
-
 func tambahData(m *arrMenu, a *int) {
 	var i, input, harga int
 	var nama, kategori, komposisi string
@@ -113,7 +104,6 @@ func tambahData(m *arrMenu, a *int) {
 
 	for {
 		fmt.Print("Masukkan ID menu: ")
-		fmt.Println("")
 		fmt.Scan(&input)
 
 		duplikat = false
@@ -137,16 +127,16 @@ func tambahData(m *arrMenu, a *int) {
 		}
 	}
 
-	fmt.Println("<NamaMenu> <Kategori> <Harga> <Komposisi> <Ketersediaan(true/false)>")
-
+	fmt.Println("<NamaMenu> <Kategori> <Harga> <Ketersediaan(true/false)> <Komposisi>")
 	fmt.Scan(
 		&nama,
 		&kategori,
 		&harga,
-		&komposisi,
-		&ketersediaan)
+		&ketersediaan,
+		&komposisi)
+
 	fmt.Println("")
-	if (kategori == "makanan" && (input > 0 && input < 100)) || (kategori == "minumanNC" && (input >= 100 && input < 200)) || (kategori == "minumanC" && (input >= 200 && input < 300)) {
+	if (kategori == "food" && (input > 0 && input < 100)) || (kategori == "noncoffe" && (input >= 100 && input < 200)) || (kategori == "coffe" && (input >= 200 && input < 300)) {
 		m[*a].id = input
 		m[*a].nama = nama
 		m[*a].kategori = kategori
@@ -169,16 +159,26 @@ func tambahData(m *arrMenu, a *int) {
 func lihatData(m *arrMenu, a *int) {
 	var i int
 
+	fmt.Printf(
+		"%-7s | %-20s | %-15s | %-10s | %-15v | %s\n",
+		"ID",
+		"Nama",
+		"Kategori",
+		"Harga",
+		"Ketersediaan",
+		"Komposisi")
+
 	if *a != 0 {
 		for i = 0; i < *a; i++ {
 			fmt.Printf(
-				"%d %s %s %d %s %v\n",
+				"%-7d | %-20s | %-15s | %-10d | %-15v | %s\n",
 				m[i].id,
 				m[i].nama,
 				m[i].kategori,
 				m[i].harga,
+				m[i].ketersediaan,
 				m[i].komposisi,
-				m[i].ketersediaan)
+			)
 		}
 		fmt.Println("")
 	} else {
@@ -189,32 +189,52 @@ func lihatData(m *arrMenu, a *int) {
 
 func ubahData(m *arrMenu, a *int) {
 	var edit, i int
+	var pilih string
 
-	fmt.Println("Ketik -1 untuk keluar")
-	fmt.Print("Masukkan ID menu: ")
-	fmt.Scan(&edit)
+	for {
+		fmt.Println("Ketik -1 untuk keluar")
+		fmt.Print("Masukkan ID menu: ")
+		fmt.Scan(&edit)
 
-	if edit == -1 {
-		fmt.Println("Keluar dari ubah data!")
-		return
-	}
-
-	for i = 0; i < *a; i++ {
-		if m[i].id == edit {
-			fmt.Println("<NamaMenu> <Kategori> <Harga> <Komposisi> <Ketersediaan(true/false)>")
-			fmt.Scan(
-				&m[i].nama,
-				&m[i].kategori,
-				&m[i].harga,
-				&m[i].komposisi,
-				&m[i].ketersediaan)
-
-			fmt.Println("Data Berhasil Diedit")
+		if edit == -1 {
+			fmt.Println("Keluar dari ubah data!")
 			return
+		}
+		for i = 0; i < *a; i++ {
+			if m[i].id == edit {
+				break
+			}
+		}
+		fmt.Println("Pilih yang mau diubah: ")
+		fmt.Println("<NamaMenu> <Kategori> <Harga> <Ketersediaan(true/false)> <Komposisi>")
+		fmt.Scan(&pilih)
+
+		if pilih == "NamaMenu" || pilih == "namamenu" {
+			fmt.Print("Masukkan Nama Menu Baru: ")
+			fmt.Scan(&m[i].nama)
+			fmt.Println("Nama Menu berhasil diubah!")
+		} else if pilih == "Kategori" || pilih == "kategorimenu" {
+			fmt.Print("Masukkan Kategori Baru: ")
+			fmt.Scan(&m[i].kategori)
+			fmt.Println("Kategori berhasil diubah!")
+		} else if pilih == "Harga" || pilih == "harga" {
+			fmt.Print("Masukkan Harga Baru: ")
+			fmt.Scan(&m[i].harga)
+			fmt.Println("Harga berhasil diubah!")
+		} else if pilih == "Komposisi" || pilih == "komposisi" {
+			fmt.Print("Masukkan Komposisi Baru: ")
+			fmt.Scan(&m[i].komposisi)
+			fmt.Println("Komposisi berhasil diubah!")
+		} else if pilih == "Ketersediaan" || pilih == "ketersediaan" {
+			fmt.Print("Masukkan Ketersediaan Baru: ")
+			fmt.Scan(&m[i].ketersediaan)
+			fmt.Println("Ketersediaan berhasil diubah!")
+		} else {
+			fmt.Println("Pilihan Tidak Valid!")
+			fmt.Println("")
 		}
 	}
 
-	fmt.Println("ID tidak ditemukan")
 }
 
 func hapusData(m *arrMenu, a *int) {
@@ -269,7 +289,7 @@ func StatistikCafe(m *arrMenu, a *int) {
 			fmt.Printf("Jumlah Rata Rata Harga Semua Menu: %.2f\n", rataAllMenu/float64(allCategory))
 			return
 		} else if mode == 2 {
-			fmt.Println("Masukkan Kategori (makanan/minumanC/minumanNC)")
+			fmt.Println("Masukkan Kategori (food/coffe/noncoffe)")
 			fmt.Scan(&category)
 			fmt.Println("")
 
@@ -303,21 +323,31 @@ func lihatDataByCategory(m *arrMenu, a *int) {
 
 	switch mode {
 	case 1:
-		fmt.Println("Masukkan Kategori (makanan/minumanC/minumanNC)")
+		fmt.Println("Masukkan Kategori (food/coffe/noncoffe)")
 		fmt.Scan(&category)
 		fmt.Println("")
 		fmt.Println("Menu Kategori ", category)
 
+		fmt.Printf(
+			"%-7s | %-20s | %-15s | %-10s | %-15v | %s\n",
+			"ID",
+			"Nama",
+			"Kategori",
+			"Harga",
+			"Ketersediaan",
+			"Komposisi",
+		)
+
 		for i = 0; i < *a; i++ {
 			if m[i].kategori == category {
 				fmt.Printf(
-					"%d %s %s %d %s %v\n",
+					"%-7d | %-20s | %-15s | %-10d | %-15v | %s\n",
 					m[i].id,
 					m[i].nama,
 					m[i].kategori,
 					m[i].harga,
-					m[i].komposisi,
-					m[i].ketersediaan)
+					m[i].ketersediaan,
+					m[i].komposisi)
 			}
 
 		}
@@ -333,43 +363,34 @@ func lihatDataByCategory(m *arrMenu, a *int) {
 }
 
 func categoryBinarySearch(m *arrMenu, a *int) {
-	var i, j, l, r, mid, min int
+	var l, r, mid, i int
 	var kategori string
-	var temp Menu
-	//untuk binary search, data harus diurutkan dulu berdasarkan kategori range sesuai dengan kategorinya, jadi makanan 1-99, minuman non kopi 100-199, minuman kopi 200-299
-	for i = 0; i < *a-1; i++ {
-		min = i
 
-		for j = i + 1; j < *a; j++ {
-			if m[j].kategori < m[min].kategori {
-				min = j
-			}
-		}
-
-		temp = m[i]
-		m[i] = m[min]
-		m[min] = temp
-	}
-
-	fmt.Println("Masukkan Kategori (makanan/minumanC/minumanNC)")
+	sortBinarySearch(m, a) // Wajib agar kategori yang sama berkumpul berurutan
+	fmt.Println("Masukkan Kategori (food/coffe/noncoffe)")
 	fmt.Scan(&kategori)
 	fmt.Println("")
-	fmt.Println("Menu Kategori ", kategori)
+
 	l = 0
 	r = *a - 1
 
 	for l <= r {
 		mid = (l + r) / 2
-		if kategori == m[mid].kategori {
-			fmt.Printf(
-				"%d %s %s %d %s %v\n",
-				m[mid].id,
-				m[mid].nama,
-				m[mid].kategori,
-				m[mid].harga,
-				m[mid].komposisi,
-				m[mid].ketersediaan)
+
+		if m[mid].kategori == kategori {
+			i = mid
+			for i > 0 && m[i-1].kategori == kategori {
+				i--
+			}
+
+			fmt.Printf("%-7s | %-20s | %-15s | %-10s | %-15v | %s\n", "ID", "Nama", "Kategori", "Harga", "Ketersediaan", "Komposisi")
+			for i < *a && m[i].kategori == kategori {
+				fmt.Printf("%-7d | %-20s | %-15s | %-10d | %-15v | %s\n", m[i].id, m[i].nama, m[i].kategori, m[i].harga, m[i].ketersediaan, m[i].komposisi)
+				i++
+			}
+			return
 		}
+
 		if kategori < m[mid].kategori {
 			r = mid - 1
 		} else {
@@ -377,6 +398,7 @@ func categoryBinarySearch(m *arrMenu, a *int) {
 		}
 	}
 
+	fmt.Println("Kategori tidak ditemukan!")
 }
 
 //============ Lihat menu by price ============
@@ -398,15 +420,45 @@ func hargaSelectionSort(m *arrMenu, a *int) {
 		m[min] = temp
 	}
 
+	fmt.Printf(
+		"%-7s | %-20s | %-15s | %-10s | %-1v | %s\n",
+		"ID",
+		"Nama",
+		"Kategori",
+		"Harga",
+		"Ketersediaan",
+		"Komposisi")
+
 	for k = 0; k < *a; k++ {
 		fmt.Printf(
-			"%d %s %s %d %s %v\n",
+			"%-7d | %-20s | %-15s | %-10d | %-15v | %s\n",
 			m[k].id,
 			m[k].nama,
 			m[k].kategori,
 			m[k].harga,
-			m[k].komposisi,
-			m[k].ketersediaan)
+			m[k].ketersediaan,
+			m[k].komposisi)
+	}
+
+}
+
+//============ Sort Binary Search ============
+func sortBinarySearch(m *arrMenu, a *int) {
+	var i, j, min int
+	var temp Menu
+
+	for i = 0; i < *a-1; i++ {
+		min = i
+
+		for j = i + 1; j < *a; j++ {
+			if m[j].kategori < m[min].kategori {
+				min = j
+			}
+		}
+
+		temp = m[i]
+		m[i] = m[min]
+		m[min] = temp
 	}
 
 }
@@ -427,15 +479,24 @@ func hargaInsertionSort(m *arrMenu, a *int) {
 		m[j+1] = temp
 	}
 
+	fmt.Printf(
+		"%-7s | %-20s | %-15s | %-10s | %-15v | %s\n",
+		"ID",
+		"Nama",
+		"Kategori",
+		"Harga",
+		"Ketersediaan",
+		"Komposisi")
+
 	for k = 0; k < *a; k++ {
 		fmt.Printf(
-			"%d %s %s %d %s %v\n",
+			"%-7d | %-20s | %-15s | %-10d | %-15v | %s\n",
 			m[k].id,
 			m[k].nama,
 			m[k].kategori,
 			m[k].harga,
-			m[k].komposisi,
-			m[k].ketersediaan)
+			m[k].ketersediaan,
+			m[k].komposisi)
 	}
 }
 
@@ -465,7 +526,6 @@ func adminMode(menu *arrMenu, a *int) {
 	for {
 		fmt.Printf("%-4c %s\n", ' ', "Mode Admin")
 		fmt.Println("-------------------")
-		fmt.Println("0. Inisialisasi Data")
 		fmt.Println("1. Tambah Data")
 		fmt.Println("2. Edit Data")
 		fmt.Println("3. Hapus Data")
@@ -476,15 +536,8 @@ func adminMode(menu *arrMenu, a *int) {
 		fmt.Println("")
 
 		switch mode {
-		case 0:
-			initData(menu, a)
 		case 1:
-			if *a == 0 {
-				fmt.Println("Data kosong! Memasuki inisialisasi data...")
-				initData(menu, a)
-			} else {
-				tambahData(menu, a)
-			}
+			tambahData(menu, a)
 
 		case 2:
 			ubahData(menu, a)

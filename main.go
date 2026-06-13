@@ -89,6 +89,57 @@ func main() {
 
 }
 
+//============ Manage Data ============
+func initData(m *arrMenu, a *int) {
+	var i, input, harga int
+	var nama, kategori, komposisi string
+	var ketersediaan bool
+
+	if *a == 0 {
+		fmt.Println("Range ID untuk makanan: 1-99")
+		fmt.Println("Range ID untuk minuman non kopi: 100-199")
+		fmt.Println("Range ID untuk minuman kopi: 200-299")
+		fmt.Println("<ID> <NamaMenu> <Kategori> <Harga> <Komposisi> <Ketersediaan(true/false)>")
+		fmt.Println("Ketik -1 untuk keluar")
+		i = 0
+
+		for {
+			fmt.Scan(&input)
+
+			if i >= NMAX || input == -1 {
+				break
+			}
+
+			fmt.Scan(
+				&nama,
+				&kategori,
+				&harga,
+				&komposisi,
+				&ketersediaan)
+
+			if (kategori == "makanan" && (input > 0 && input < 100)) || (kategori == "minumanNC" && (input >= 100 && input < 200)) || (kategori == "minumanC" && (input >= 200 && input < 300)) {
+				m[i].id = input
+				m[i].nama = nama
+				m[i].kategori = kategori
+				m[i].harga = harga
+				m[i].komposisi = komposisi
+				m[i].ketersediaan = ketersediaan
+
+				i = i + 1
+			} else {
+				fmt.Println("Kategori tidak sesuai dengan range ID, data tidak disimpan!")
+			}
+
+		}
+
+		*a = i
+	} else {
+		fmt.Println("Data sudah diinisialisasi!")
+		return
+	}
+
+}
+
 func tambahData(m *arrMenu, a *int) {
 	var i, input, harga int
 	var nama, kategori, komposisi string
@@ -100,6 +151,9 @@ func tambahData(m *arrMenu, a *int) {
 		return
 	}
 
+	fmt.Println("Range ID untuk food: 1-99")
+	fmt.Println("Range ID untuk noncoffee: 100-199")
+	fmt.Println("Range ID untuk coffee: 200-299")
 	fmt.Println("Ketik -1 untuk keluar")
 
 	for {
@@ -136,7 +190,7 @@ func tambahData(m *arrMenu, a *int) {
 		&komposisi)
 
 	fmt.Println("")
-	if (kategori == "food" && (input > 0 && input < 100)) || (kategori == "noncoffe" && (input >= 100 && input < 200)) || (kategori == "coffe" && (input >= 200 && input < 300)) {
+	if (kategori == "makanan" && (input > 0 && input < 100)) || (kategori == "minumanNC" && (input >= 100 && input < 200)) || (kategori == "minumanC" && (input >= 200 && input < 300)) {
 		m[*a].id = input
 		m[*a].nama = nama
 		m[*a].kategori = kategori
@@ -191,10 +245,9 @@ func ubahData(m *arrMenu, a *int) {
 	var edit, i int
 	var pilih string
 
-	for {
-		fmt.Println("Ketik -1 untuk keluar")
-		fmt.Print("Masukkan ID menu: ")
-		fmt.Scan(&edit)
+	fmt.Println("Ketik -1 untuk keluar")
+	fmt.Print("Masukkan ID menu: ")
+	fmt.Scan(&edit)
 
 		if edit == -1 {
 			fmt.Println("Keluar dari ubah data!")
@@ -289,7 +342,7 @@ func StatistikCafe(m *arrMenu, a *int) {
 			fmt.Printf("Jumlah Rata Rata Harga Semua Menu: %.2f\n", rataAllMenu/float64(allCategory))
 			return
 		} else if mode == 2 {
-			fmt.Println("Masukkan Kategori (food/coffe/noncoffe)")
+			fmt.Println("Masukkan Kategori (food/coffee/noncoffee)")
 			fmt.Scan(&category)
 			fmt.Println("")
 
@@ -323,7 +376,7 @@ func lihatDataByCategory(m *arrMenu, a *int) {
 
 	switch mode {
 	case 1:
-		fmt.Println("Masukkan Kategori (food/coffe/noncoffe)")
+		fmt.Println("Masukkan Kategori (food/coffee/noncoffee)")
 		fmt.Scan(&category)
 		fmt.Println("")
 		fmt.Println("Menu Kategori ", category)
@@ -365,9 +418,23 @@ func lihatDataByCategory(m *arrMenu, a *int) {
 func categoryBinarySearch(m *arrMenu, a *int) {
 	var l, r, mid, i int
 	var kategori string
+	var temp Menu
+	//untuk binary search, data harus diurutkan dulu berdasarkan kategori range sesuai dengan kategorinya, jadi makanan 1-99, minuman non kopi 100-199, minuman kopi 200-299
+	for i = 0; i < *a-1; i++ {
+		min = i
 
-	sortBinarySearch(m, a) // Wajib agar kategori yang sama berkumpul berurutan
-	fmt.Println("Masukkan Kategori (food/coffe/noncoffe)")
+		for j = i + 1; j < *a; j++ {
+			if m[j].kategori < m[min].kategori {
+				min = j
+			}
+		}
+
+		temp = m[i]
+		m[i] = m[min]
+		m[min] = temp
+	}
+
+	fmt.Println("Masukkan Kategori (makanan/minumanC/minumanNC)")
 	fmt.Scan(&kategori)
 	fmt.Println("")
 
@@ -569,7 +636,7 @@ func userMode(menu *arrMenu, a *int) {
 		fmt.Println("-------------------")
 		fmt.Println("1. Lihat Menu")
 		fmt.Println("2. Search Menu By Category")
-		fmt.Println("3. Search menu By Descending Price")
+		fmt.Println("3. Search menu By Ascending Price")
 		fmt.Println("4. Kembali")
 		fmt.Scan(&mode)
 		fmt.Println("")
